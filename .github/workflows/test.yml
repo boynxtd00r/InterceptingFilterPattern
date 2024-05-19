@@ -18,15 +18,26 @@ jobs:
         sudo apt-get update
         sudo apt-get -y install build-essential cmake
 
-    - name: Remove existing build directory if it exists
+    - name: Remove existing build directory
       run: |
-        if [ -d "build" ]; then rm -rf build; fi
+        rm -rf build
 
-    - name: Build and run tests
+    - name: Create build directory
       run: |
         mkdir build
+
+    - name: Configure CMake
+      run: |
         cd build
         cmake ..
+
+    - name: Build the project
+      run: |
+        cd build
         make
+
+    - name: Run tests
+      run: |
+        cd build
         ctest --output-on-failure
 
