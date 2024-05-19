@@ -1,4 +1,4 @@
-name: Test
+name: CI
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - master
 
 jobs:
-  test:
+  build_and_test:
     runs-on: ubuntu-latest
 
     steps:
@@ -40,4 +40,17 @@ jobs:
       run: |
         cd build
         ctest --output-on-failure
+
+    - name: Archive executable
+      run: |
+        mkdir -p artifacts
+        cp build/intercepting_filter_demo artifacts/
+        cp build/intercepting_filter_tests artifacts/
+      if: always()
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: executables
+        path: artifacts/
 
