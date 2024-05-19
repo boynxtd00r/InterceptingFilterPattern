@@ -8,19 +8,22 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    
+
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
-      
+
     - name: Install dependencies
       run: |
         sudo apt-get update
         sudo apt-get -y install build-essential cmake
 
+    - name: Remove existing build directory if it exists
+      run: |
+        if [ -d "build" ]; then rm -rf build; fi
+
     - name: Build and run tests
       run: |
-        rm -rf build # Удаляем каталог build, если он существует
         mkdir build
         cd build
         cmake ..
