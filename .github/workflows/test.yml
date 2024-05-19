@@ -20,6 +20,7 @@ jobs:
 
     - name: Build and run tests
       run: |
+        rm -rf build # Удаляем каталог build, если он существует
         mkdir build
         cd build
         cmake ..
